@@ -32,7 +32,7 @@ def create_book():
     book = {
         'id': books.all()[-1]['id'] + 1,
         'title': request.json['title'],
-        'author': request.json['title'],
+        'author': request.json['author'],
         'publishment_date': request.json['publishment_date'],
         'description': request.json.get('description', "")
     }
@@ -62,7 +62,7 @@ def update_book(book_id):
         abort(400)
     data = request.json
     if any([
-        'id' in data and not isinstance(data.get('title'), int),
+        'id' in data and not isinstance(data.get('id'), int),
         'title' in data and not isinstance(data.get('title'), str),
         'author' in data and not isinstance(data.get('author'), str),
         'publishment_date' in data and not isinstance(data.get('publishment_date'), str),
