@@ -34,7 +34,7 @@ def create_book():
         'title': request.json['title'],
         'author': request.json['title'],
         'publishment_date': request.json['publishment_date'],
-        'description': request.json.get('description', ""),
+        'description': request.json.get('description', "")
     }
     books.create(book)
     return jsonify({'book': book}), 201
@@ -62,17 +62,19 @@ def update_book(book_id):
         abort(400)
     data = request.json
     if any([
+        'id' in data and not isinstance(data.get('title'), int),
         'title' in data and not isinstance(data.get('title'), str),
         'author' in data and not isinstance(data.get('author'), str),
         'publishment_date' in data and not isinstance(data.get('publishment_date'), str),
-        'description' in data and not isinstance(data.get('description'), str),
+        'description' in data and not isinstance(data.get('description'), str)
     ]):
         abort(400)
     book = {
+        'id': data.get('id', book['id']),
         'title': data.get('title', book['title']),
         'author': data.get('author', book['author']),
         'publishment_date': data.get('publishment_dater', book['publishment_date']),
-        'description': data.get('description', book['description']),
+        'description': data.get('description', book['description'])
     }
     books.update(book_id, book)
     return jsonify({'book': book})
